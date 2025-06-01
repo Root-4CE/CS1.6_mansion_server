@@ -1,4 +1,4 @@
-# Counter-Strike 1.6 Docker Server
+# Counter-Strike 1.6 cs_mansion Docker Server with bots
 Docker Image for a dedicated Counter-Strike 1.6 server with metamod, amxmodx and fast download.
 
 
