@@ -12,32 +12,12 @@ docker pull archont94/counter-strike1.6
 ```
 
 ``` bash
-docker run --name cs16-server -p 27015:27015/udp -p 27015:27015 -p 80:80 archont94/counter-strike1.6:latest
+docker run --name cs16-server -p 27015:27015/udp -p 27015:27015 -v ./cstrike:/hlds/cstrike --entrypoint /bin/sh archont94/counter-strike1.6:latest -c "service nginx start && ./hlds_run -game cstrike -strictportbind -ip 0.0.0.0 -port 27015 +sv_lan 0 +map cs_mansion -maxplayers 10 +localinfo mm_pluginsfile addons/metamod/plugins.ini +pb fillserver
 ```
 
 Port 27015 is required by Counter-Strike 1.6 game server.
 
 Port 80 is used to serve assets (maps, gfxs etc.) via http for fast download feature. 
-
-
-## Available build variables
-
-| Variable       | Value                             | Comment |
-| -------------- | --------------------------------- | ------- |
-| SERVER_NAME    | "Counter-Strike 1.6 DockerServer" | Custom name for server, can be modified later in /hlds/cstrike/server.cfg |
-| FAST_DL        | "http://127.0.0.1/cstrike/"       | Full address for fast download site, it can be IP address or domain of your server. Keep in mind, it have to contain 'http' at beginning. Verify if assets are served properly by checking this link in web browser, you should be able to see gfx, maps, models, overviews, sound and sprites directories and their content. If port 80 is already in use by other docker, you can do differnet port mapping (`-p 8080:80`) and include that information in final path (i.e. `http://10.20.30.40:8080/cstrike/`). Can be modified later in /hlds/cstrike/server.cfg |
-| ADMIN_STEAM_ID | "STEAM_0:0:123456"                | Custom SteamID for admin user, can be checked in Counter-Strike console (type 'status' when you are connected to any server). Can be modified (or additional admins can be added) in /hlds/cstrike/addons/amxmodx/configs/users.ini |
-
-In order to edit file, log inside container with `docker exec -it CONTAINER_ID bash`. After that you can run `nano` editor and modify files.
-
-## Available environment variables
-
-| Variable   | Value    |
-| ---------- | -------- |
-| PORT       | 27015    |
-| MAP        | de_dust2 |
-| MAXPLAYERS | 16       |
-| SV_LAN     | 0        |
 
 ## Custom config files
 
