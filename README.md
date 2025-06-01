@@ -12,7 +12,7 @@ docker pull archont94/counter-strike1.6
 ```
 
 ``` bash
-docker run --name cs16-server -p 27015:27015/udp -p 27015:27015 -v ./cstrike:/hlds/cstrike --entrypoint /bin/sh archont94/counter-strike1.6:latest -c "service nginx start && ./hlds_run -game cstrike -strictportbind -ip 0.0.0.0 -port 27015 +sv_lan 0 +map cs_mansion -maxplayers 10 +localinfo mm_pluginsfile addons/metamod/plugins.ini +pb fillserver
+docker run --name cs16-server -p 27015:27015/udp -p 27015:27015 -v ./cstrike:/hlds/cstrike --entrypoint /bin/sh archont94/counter-strike1.6:latest -c "service nginx start && ./hlds_run -game cstrike -strictportbind -ip 0.0.0.0 -port 27015 +sv_lan 0 +map cs_mansion -maxplayers 10 +localinfo mm_pluginsfile addons/metamod/plugins.ini +pb fillserver"
 ```
 
 Port 27015 is required by Counter-Strike 1.6 game server.
